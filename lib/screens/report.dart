@@ -34,11 +34,22 @@ class _ReportScreenState extends State<ReportScreen> {
     setState(() {
       _isLoading = true;
     });
-    final stores = await provider.getListStoreIsDone();
-    setState(() {
-      entries = stores;
-      _isLoading = false;
-    });
+
+    try {
+      // Replace 'yourUserId' with the actual user ID you want to filter
+
+      final stores = await provider.getListStoreIsDone(userId.toString());
+
+      setState(() {
+        entries = stores;
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Error: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   void filterStores(String searchTerm) {
@@ -105,7 +116,8 @@ class _ReportScreenState extends State<ReportScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => ReportDetail(
-                                  store: storeDetail,),
+                                store: storeDetail,
+                              ),
                             ),
                           );
                           setState(() {

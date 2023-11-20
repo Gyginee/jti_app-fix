@@ -189,13 +189,14 @@ class APIProvider {
     }
   }
 
-  Future<List<Store>> getListStoreIsDone() async {
+  Future<List<Store>> getListStoreIsDone(String userId) async {
     try {
       final url = Uri.parse('${Constants.API_URL}store/filterReport');
       final request = http.Request('POST', url);
 
       request.bodyFields = {
         'isDone': '1',
+        'userId': userId, // Add userId to the request parameters
       };
 
       final response = await http.Client().send(request);
@@ -207,40 +208,39 @@ class APIProvider {
 
         List<Store> stores = data.map((item) {
           return Store(
-              id: item['id'].toString(),
-              storeName: item['storeName'],
-              provinceId: item['provinceId'].toString(),
-              districtId: item['districtId'].toString(),
-              address: item['address'],
-              lat: item['lat'],
-              long: item['long'],
-              status: item['status'],
-              contactName: item['contactName'],
-              phoneNumber: item['phoneNumber'],
-              userId: item['userId'].toString(),
-              calendar: item['calendar'],
-              reward: item['reward'].toString(),
-              isDone: item['isDone'].toString(),
-              provinceName: item['provinceName'],
-              districName: item['districName'],
-              statusName: item['statusName'],
-              userFirstName: item['userFirstName'],
-              userLastName: item['userLastName'],
-              note: item['note'] ?? '',
-              winnerName: item['winnerName'] ?? '',
-              winnerBankName: item['winnerBankName'] ?? '',
-              winnerBankNumber: item['winnerBankNumber'] ?? '',
-              winnerRelationship: item['winnerRelationship'] ?? '',
-              storeCode: item['storeCode']);
+            id: item['id'].toString(),
+            storeName: item['storeName'],
+            provinceId: item['provinceId'].toString(),
+            districtId: item['districtId'].toString(),
+            address: item['address'],
+            lat: item['lat'],
+            long: item['long'],
+            status: item['status'],
+            contactName: item['contactName'],
+            phoneNumber: item['phoneNumber'],
+            userId: item['userId'].toString(),
+            calendar: item['calendar'],
+            reward: item['reward'].toString(),
+            isDone: item['isDone'].toString(),
+            provinceName: item['provinceName'],
+            districName: item['districName'],
+            statusName: item['statusName'],
+            userFirstName: item['userFirstName'],
+            userLastName: item['userLastName'],
+            note: item['note'] ?? '',
+            winnerName: item['winnerName'] ?? '',
+            winnerBankName: item['winnerBankName'] ?? '',
+            winnerBankNumber: item['winnerBankNumber'] ?? '',
+            winnerRelationship: item['winnerRelationship'] ?? '',
+            storeCode: item['storeCode'],
+          );
         }).toList();
 
         return stores;
       } else {
-        //print('Failed to fetch data. Status code: ${response.statusCode}');
         throw Exception('Failed to fetch data');
       }
     } catch (e) {
-      //print('Error while fetching data: $e');
       throw Exception('Failed to fetch data: $e');
     }
   }
