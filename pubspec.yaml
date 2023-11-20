@@ -50,7 +50,7 @@ dev_dependencies:
   geolocator: ^9.0.2
   image_gallery_saver: ^2.0.3
   image: ^4.0.17
-  flutter_native_image: ^0.0.6
+  flutter_native_image: ^0.0.6+1
   flutter_image_compress: ^2.0.4
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
